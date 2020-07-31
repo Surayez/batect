@@ -3,14 +3,20 @@ project_name: tf_trial
 containers:
   build-env:
     image: openjdk:8u181-jdk
+    volumes:
+      - local: .
+        container: /code
+        options: cached
     working_directory: /code
-    run_as_current_user:
-      enabled: true
-      home_directory: /home/container-user
 
 tasks:
-  build:
+  build-infra:
     description: Building app
     run:
       container: build-env
-      command: echo 'Hello World!'
+      command: scripts/run-terraform.sh
+      environment:
+        OPERATION: plan
+        TERRAFORM_DIR: /code/terraform
+        STAGE: dev
+        SERVICE_NAME: surayez-test

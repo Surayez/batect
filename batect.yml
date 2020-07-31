@@ -1,0 +1,16 @@
+project_name: tf_trial
+
+containers:
+  build-env:
+    image: openjdk:8u181-jdk
+    working_directory: /code
+    run_as_current_user:
+      enabled: true
+      home_directory: /home/container-user
+
+tasks:
+  build:
+    description: Building app
+    run:
+      container: build-env
+      command: echo 'Hello World!'
